@@ -17,7 +17,15 @@ import {
   SimpleGrid,
   FormControl,
   FormLabel,
-  Button
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Link
 } from '@chakra-ui/react'
 import { fetchIncidents, selectIncidents } from './incidentsSlice'
 import { selectSeverityLevels } from '../severity-levels/severityLevelsSlice'
@@ -32,6 +40,8 @@ const Incidents = () => {
   const { data: incidentsData, loading: incidentsLoading, error: incidentsError } = useSelector(selectIncidents)
   const { data: severityLevelsData } = useSelector(selectSeverityLevels)
   const { data: esgCategoriesData } = useSelector(selectESGCategories)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [selectedIncident, setSelectedIncident] = useState<any>(null)
 
   // 筛选状态
   const [startDate, setStartDate] = useState<Date | null>(null)
@@ -104,6 +114,11 @@ const Incidents = () => {
     setEndDate(null)
     setSelectedSeverity('')
     setSelectedCategory('')
+  }
+
+  const handleIncidentClick = (incident: any) => {
+    setSelectedIncident(incident)
+    onOpen()
   }
 
   // 应用筛选条件
@@ -221,6 +236,8 @@ const Incidents = () => {
                 align="center"
                 position="relative"
                 minW="200px"
+                onClick={() => handleIncidentClick(incident)}
+                cursor="pointer"
               >
                 {/* Timeline dot */}
                 <Box
@@ -300,6 +317,124 @@ const Incidents = () => {
           </HStack>
         </Box>
       </Box>
+
+      {/* Incident Details Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          {selectedIncident && (
+            <>
+              <ModalHeader
+                borderBottomWidth="1px"
+                borderColor={getCategoryColor(selectedIncident.category)}
+                borderLeftWidth="4px"
+                bg="white"
+                py={4}
+              >
+                <VStack align="start" spacing={1}>
+                  <Text fontWeight="bold" fontSize="lg">{selectedIncident.title}</Text>
+                  <Text fontSize="sm" color="gray.500">
+                    {new Date(selectedIncident.date).toLocaleDateString()}
+                  </Text>
+                </VStack>
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody p={4}>
+                <Box
+                  p={4}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  borderColor={getCategoryColor(selectedIncident.category)}
+                  borderLeftWidth="4px"
+                  display="flex"
+                  gap={4}
+                >
+                  <Box
+                    p={3}
+                    bg="red.50"
+                    borderRadius="md"
+                    minW="120px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    minH={`${Math.min(100, Math.max(20, selectedIncident.riskScoreImpact.overall * 2))}px`}
+                  >
+                    <VStack spacing={0}>
+                      <Text fontSize="lg" fontWeight="bold" color="red.700">
+                        {selectedIncident.riskScoreImpact.overall}
+                      </Text>
+                    </VStack>
+                  </Box>
+                  <VStack align="stretch" spacing={2} flex={1}>
+                    <HStack justify="space-between">
+                      <Text fontWeight="bold">{selectedIncident.title}</Text>
+                      <Badge
+                        bg={getSeverityColor(selectedIncident.severity)}
+                        color="white"
+                      >
+                        {selectedIncident.severity}
+                      </Badge>
+                    </HStack>
+                    <Text fontSize="sm" color="gray.500">
+                      {new Date(selectedIncident.date).toLocaleDateString()}
+                    </Text>
+                    <Text>{selectedIncident.description}</Text>
+                    <Text fontSize="sm">
+                      <strong>Detailed Description:</strong> {selectedIncident.detailedDescription}
+                    </Text>
+                    <Text fontSize="sm">
+                      <strong>Location:</strong> {selectedIncident.location}
+                    </Text>
+                    <Text fontSize="sm">
+                      <strong>Category:</strong> {getCategoryName(selectedIncident.category)}
+                    </Text>
+                    <Text fontSize="sm">
+                      <strong>Subcategory:</strong> {getSubcategoryName(selectedIncident.category, selectedIncident.subcategory)}
+                    </Text>
+                    <Box>
+                      <Text fontSize="sm" fontWeight="bold" mb={1}>Risk Score Impact:</Text>
+                      <HStack spacing={4}>
+                        <Text fontSize="sm">
+                          <strong>Overall:</strong> {selectedIncident.riskScoreImpact.overall}
+                        </Text>
+                        <Text fontSize="sm">
+                          <strong>Environmental:</strong> {selectedIncident.riskScoreImpact.environmental}
+                        </Text>
+                        <Text fontSize="sm">
+                          <strong>Social:</strong> {selectedIncident.riskScoreImpact.social}
+                        </Text>
+                        <Text fontSize="sm">
+                          <strong>Governance:</strong> {selectedIncident.riskScoreImpact.governance}
+                        </Text>
+                      </HStack>
+                    </Box>
+                    {selectedIncident.sources && selectedIncident.sources.length > 0 && (
+                      <Box>
+                        <Text fontSize="sm" fontWeight="bold" mb={1}>Sources:</Text>
+                        <VStack align="start" spacing={1}>
+                          {selectedIncident.sources.map((source: any, index: number) => (
+                            <Text key={index} fontSize="sm">
+                              <a
+                                href={source.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#3182CE', textDecoration: 'underline' }}
+                              >
+                                {source.title}
+                              </a>
+                              {' '}({new Date(source.publishDate).toLocaleDateString()})
+                            </Text>
+                          ))}
+                        </VStack>
+                      </Box>
+                    )}
+                  </VStack>
+                </Box>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
