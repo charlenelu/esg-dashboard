@@ -24,14 +24,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
-  Link
+  useDisclosure
 } from '@chakra-ui/react'
 import { fetchIncidents, selectIncidents } from './incidentsSlice'
 import { selectSeverityLevels } from '../severity-levels/severityLevelsSlice'
 import { selectESGCategories } from '../esg-categories/esgCategoriesSlice'
 import { AppDispatch } from '../../store'
 import type { ESGCategory } from '../esg-categories/esgCategoriesSlice'
+import type { Incident } from '../../types/incident-type'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 
@@ -41,7 +41,7 @@ const Incidents = () => {
   const { data: severityLevelsData } = useSelector(selectSeverityLevels)
   const { data: esgCategoriesData } = useSelector(selectESGCategories)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedIncident, setSelectedIncident] = useState<any>(null)
+  const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null)
 
   // 筛选状态
   const [startDate, setStartDate] = useState<Date | null>(null)
@@ -116,7 +116,7 @@ const Incidents = () => {
     setSelectedCategory('')
   }
 
-  const handleIncidentClick = (incident: any) => {
+  const handleIncidentClick = (incident: Incident) => {
     setSelectedIncident(incident)
     onOpen()
   }
@@ -412,7 +412,7 @@ const Incidents = () => {
                       <Box>
                         <Text fontSize="sm" fontWeight="bold" mb={1}>Sources:</Text>
                         <VStack align="start" spacing={1}>
-                          {selectedIncident.sources.map((source: any, index: number) => (
+                          {selectedIncident.sources.map((source, index) => (
                             <Text key={index} fontSize="sm">
                               <a
                                 href={source.url}
