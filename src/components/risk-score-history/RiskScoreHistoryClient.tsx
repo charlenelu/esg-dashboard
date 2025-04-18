@@ -1,60 +1,29 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, VStack, Text, Spinner, Alert, AlertIcon } from '@chakra-ui/react'
+import { Box, VStack, Text } from '@chakra-ui/react'
 import ReactECharts from 'echarts-for-react'
-import { fetchRiskScoreHistory, selectRiskScoreHistory } from './riskScoreHistorySlice'
-import { selectESGCategories } from '../esg-categories/esgCategoriesSlice'
-import { AppDispatch } from '../../store'
+import { RiskScoreHistoryResponse } from '@/repositories/risk-score-history/riskScoreHistoryRepository'
 
-const RiskScoreHistory = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const { data, loading, error } = useSelector(selectRiskScoreHistory)
-  const { data: esgCategories } = useSelector(selectESGCategories)
+interface RiskScoreHistoryClientProps {
+  data: RiskScoreHistoryResponse
+}
 
-  useEffect(() => {
-    dispatch(fetchRiskScoreHistory())
-  }, [dispatch])
-
-  if (loading) {
-    return (
-      <Box p={4} textAlign="center">
-        <Spinner />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        {error}
-      </Alert>
-    )
-  }
-
-  if (!data?.data || data.data.length === 0) {
-    return (
-      <Box p={4}>
-        <Text>No risk score history found</Text>
-      </Box>
-    )
-  }
-
+const RiskScoreHistoryClient = ({ data }: RiskScoreHistoryClientProps) => {
   const getCategoryColor = (categoryId: string) => {
-    const category = esgCategories?.categories.find(
-      (cat) => cat.id.toLowerCase() === categoryId.toLowerCase()
-    )
-    return category?.color || '#9C27B0' // default to governance color if not found
+    const colorMap: Record<string, string> = {
+      environmental: '#4CAF50',
+      social: '#2196F3',
+      governance: '#9C27B0'
+    }
+    return colorMap[categoryId.toLowerCase()] || '#9C27B0'
   }
 
   const option = {
     tooltip: {
       trigger: 'axis',
-      formatter: (params: any) => {
+      formatter: (params: { name: string; seriesName: string; value: number }[]) => {
         const date = params[0].name
-        const scores = params.map((param: any) => `${param.seriesName}: ${param.value}`).join('<br/>')
+        const scores = params.map((param) => `${param.seriesName}: ${param.value}`).join('<br/>')
         return `${date}<br/>${scores}`
       }
     },
@@ -161,4 +130,4 @@ const RiskScoreHistory = () => {
   )
 }
 
-export default RiskScoreHistory 
+export default RiskScoreHistoryClient 

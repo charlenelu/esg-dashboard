@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Box, VStack, Text, Badge, HStack, Spinner, Alert, AlertIcon } from '@chakra-ui/react'
 import { fetchIncidents, selectIncidents } from '../incidents/incidentsSlice'
 import { selectSeverityLevels } from '../severity-levels/severityLevelsSlice'
-import { selectESGCategories } from '../esg-categories/esgCategoriesSlice'
-import type { CompanyRiskOverview } from '@/types/company-risk-overview'
-import { fetchCompanyRiskOverview } from '@/lib/company-risk-overview'
+import type { CompanyRiskOverview } from '@/types/company-risk-overview-type'
+import { fetchCompanyRiskOverview } from '@/lib/company-risk-overview-utils'
 import { AppDispatch } from '../../store'
-import type { ESGCategory } from '../esg-categories/esgCategoriesSlice'
+import type { ESGCategory } from '@/types/esg-category-type'
+import { selectESGCategories } from '@/types/esg-category-type'
 
 const CriticalIncidents = () => {
   const dispatch = useDispatch<AppDispatch>()
