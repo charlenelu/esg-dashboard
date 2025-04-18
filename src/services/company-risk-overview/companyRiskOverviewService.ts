@@ -1,7 +1,7 @@
 import { companyRiskOverviewRepository } from '@/repositories/company-risk-overview/companyRiskOverviewRepository'
 import { RiskOverviewResponse } from './types'
 import { format } from 'date-fns'
-import { CompanyRiskOverview } from '@/types/company-risk-overview'
+import { CompanyRiskOverview } from '@/types/company-risk-overview-type'
 
 export class CompanyRiskOverviewService {
   async getRiskOverview(companyId: string): Promise<RiskOverviewResponse> {
