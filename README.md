@@ -1,262 +1,261 @@
 # ESG Dashboard
 
-一个基于 Next.js、React 和 Chakra UI 构建的现代化 ESG（环境、社会和公司治理）数据看板。
+A modern ESG (Environmental, Social, and Governance) data dashboard built with Next.js, React, and Chakra UI.
 
-## 功能特点
+## Features
 
-- 实时 ESG 数据可视化
-- 使用 ECharts 的交互式图表
-- 基于 Chakra UI 的响应式设计
-- 使用 Redux Toolkit 进行状态管理
-- 基于 TypeScript 的类型安全开发
+- Real-time ESG data visualization
+- Interactive charts using ECharts
+- Responsive design based on Chakra UI
+- State management with Redux Toolkit
+- Type-safe development with TypeScript
 
-## 环境要求
+## Environment Requirements
 
-- Node.js 18.0.0 或更高版本
-- npm 或 yarn 包管理器
+- Node.js 18.0.0 or higher
+- npm or yarn package manager
 
-## 快速开始
+## Quick Start
 
-1. 克隆仓库：
+1. Clone the repository:
 ```bash
 git clone [your-repository-url]
 cd esg-dashboard
 ```
 
-2. 安装依赖：
+2. Install dependencies:
 ```bash
 npm install
 # or
 yarn install
 ```
 
-3. 在根目录创建 `.env.local` 文件并添加环境变量：
+3. Create `.env.local` file in the root directory and add environment variables:
 ```env
-# 在此添加您的环境变量
+# Add your environment variables here
 ```
 
-4. 启动开发服务器：
+4. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 ```
 
-5. 在浏览器中访问 [http://localhost:3000](http://localhost:3000) 查看应用。
+5. Visit [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## 项目架构
+## Project Architecture
 
-### 目录结构
+### Directory Structure
 
 ```
 /
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── (dashboard)/        # Dashboard 路由组
-│   │   └── api/                # API 路由
-│   ├── components/             # 业务组件
-│   │   ├── company-risk-overview/  # 公司风险概览组件
-│   │   ├── counter/            # 计数器组件
-│   │   ├── critical-incidents/ # 重大事件组件
-│   │   ├── esg-categories/     # ESG 分类组件
-│   │   ├── incidents/          # 事件组件
-│   │   ├── risk-score-history/ # 风险评分历史组件
-│   │   └── severity-levels/    # 严重程度级别组件
-│   ├── lib/                    # 工具函数
-│   ├── repositories/           # 数据访问层
-│   ├── services/               # 业务逻辑层
-│   ├── store/                  # Redux 状态管理
-│   └── types/                  # TypeScript 类型定义
-├── public/                     # 静态资源
-├── .env.local                  # 环境变量
-└── package.json                # 项目依赖
+│   │   ├── (dashboard)/        # Dashboard route group
+│   │   └── api/                # API routes
+│   ├── components/             # Business components
+│   │   ├── company-risk-overview/  # Company risk overview component
+│   │   ├── counter/            # Counter component
+│   │   ├── critical-incidents/ # Critical incidents component
+│   │   ├── esg-categories/     # ESG categories component
+│   │   ├── incidents/          # Incidents component
+│   │   ├── risk-score-history/ # Risk score history component
+│   │   └── severity-levels/    # Severity levels component
+│   ├── lib/                    # Utility functions
+│   ├── repositories/           # Data access layer
+│   ├── services/               # Business logic layer
+│   ├── store/                  # Redux state management
+│   └── types/                  # TypeScript type definitions
+├── public/                     # Static resources
+├── .env.local                  # Environment variables
+└── package.json                # Project dependencies
 ```
 
-### 核心技术栈
+### Core Technology Stack
 
-- **前端框架**: Next.js 15.3.0
-- **UI 组件库**: Chakra UI
-- **状态管理**: Redux Toolkit
-- **图表库**: ECharts
-- **样式方案**: Tailwind CSS
-- **类型系统**: TypeScript
+- **Frontend Framework**: Next.js 15.3.0
+- **UI Component Library**: Chakra UI
+- **State Management**: Redux Toolkit
+- **Chart Library**: ECharts
+- **Styling Solution**: Tailwind CSS
+- **Type System**: TypeScript
 
-### 关键设计决策
+### Key Design Decisions
 
-#### 1. 现代化路由架构
-- 采用 Next.js App Router 架构，充分利用其文件系统路由特性
-- 使用路由组（Route Groups）组织相关页面，如 `(dashboard)` 路由组
-- 通过 `layout.tsx` 实现页面布局复用，减少代码重复
+#### 1. Modern Routing Architecture
+- Adopt Next.js App Router architecture, leveraging its file system routing features
+- Use Route Groups to organize related pages, such as the `(dashboard)` route group
+- Implement page layout reuse through `layout.tsx`, reducing code duplication
 
-#### 2. 模块化与可扩展性
-- 按功能模块组织代码，每个模块独立封装（如 `esg-categories`、`risk-score-history`）
-- 清晰的目录分层：视图层（components）、业务层（services）、数据层（repositories）
-- 统一的类型定义（types）和工具函数（lib），提高代码复用性
+#### 2. Modularity and Scalability
+- Organize code by functional modules, with each module independently encapsulated (e.g., `esg-categories`, `risk-score-history`)
+- Clear directory layering: view layer (components), business layer (services), data layer (repositories)
+- Unified type definitions (types) and utility functions (lib) to improve code reusability
 
-#### 3. 性能优化策略
-- 首屏关键组件采用服务端渲染（SSR），提升加载性能
-- 使用 Redux Toolkit 进行状态管理，实现服务端数据与客户端组件的无缝衔接
-- 实现数据缓存机制，减少重复请求
-- 图表组件（ECharts）采用客户端渲染，确保交互性能
+#### 3. Performance Optimization Strategy
+- Use Server-Side Rendering (SSR) for critical first-screen components to enhance loading performance
+- Implement state management with Redux Toolkit for seamless integration between server-side data and client-side components
+- Implement data caching mechanism to reduce duplicate requests
+- Use client-side rendering for chart components (ECharts) to ensure interactive performance
 
-#### 4. 组件设计原则
-- 基于功能和性能需求决定组件类型（服务端/客户端）
-- 静态内容优先使用服务端组件
-- 交互密集型组件（如图表、计数器）采用客户端组件
-- 通过文件名清晰标识组件类型和用途
+#### 4. Component Design Principles
+- Determine component type (server/client) based on functionality and performance requirements
+- Prioritize server components for static content
+- Use client components for interaction-intensive components (e.g., charts, counters)
+- Clearly identify component type and purpose through file naming
 
-#### 5. 错误处理与容错
-- 统一的错误处理机制，确保用户体验
-- 关键数据加载失败时提供优雅降级方案
-- 实现数据加载状态管理，提供友好的加载提示
-- 服务端和客户端双重数据验证，确保数据可靠性
+#### 5. Error Handling and Fault Tolerance
+- Implement unified error handling mechanism to ensure user experience
+- Provide graceful degradation solutions for critical data loading failures
+- Implement data loading state management with user-friendly loading indicators
+- Ensure data reliability through server and client-side data validation
 
-#### 6. 状态管理策略
-- 使用 Redux Toolkit 管理全局状态
-- 服务端获取的数据统一存储在 Redux store 中
-- 实现状态持久化，提升用户体验
-- 通过 Redux 中间件处理异步操作和副作用
+#### 6. State Management Strategy
+- Use Redux Toolkit for global state management
+- Store server-fetched data uniformly in Redux store
+- Implement state persistence to enhance user experience
+- Handle asynchronous operations and side effects through Redux middleware
 
-#### 7. 开发体验优化
-- 使用 TypeScript 确保类型安全
-- 统一的代码规范（ESLint）和格式化规则
-- 模块化的项目结构，便于团队协作
-- 完善的开发工具链支持（Turbopack、Hot Reload）
+#### 7. Development Experience Optimization
+- Ensure type safety with TypeScript
+- Implement unified code standards (ESLint) and formatting rules
+- Use modular project structure for team collaboration
+- Provide comprehensive development toolchain support (Turbopack, Hot Reload)
 
-### 状态管理方法
+### State Management Methods
 
-#### 1. 前端状态管理（Redux Toolkit）
-- **全局状态管理**
-  - 使用 Redux Toolkit 管理应用全局状态
-  - 通过 `createSlice` 创建状态切片，实现状态逻辑的模块化
-  - 使用 `configureStore` 配置 Redux store，集成中间件和开发工具
+#### 1. Frontend State Management (Redux Toolkit)
+- **Global State Management**
+  - Use Redux Toolkit to manage application global state
+  - Create state slices using `createSlice` for modular state logic
+  - Configure Redux store with `configureStore`, integrating middleware and development tools
 
-- **数据流转机制**
-  - 服务端组件获取数据后，通过 Redux action 更新 store
-  - 客户端组件通过 `useSelector` 订阅所需状态
-  - 使用 `useDispatch` 触发状态更新，保持单向数据流
+- **Data Flow Mechanism**
+  - Update store through Redux actions after server components fetch data
+  - Subscribe to required state through `useSelector` in client components
+  - Maintain unidirectional data flow using `useDispatch` for state updates
 
-- **异步状态处理**
-  - 使用 Redux Toolkit 的 `createAsyncThunk` 处理异步操作
-  - 实现标准的加载、成功、失败状态管理
-  - 通过中间件处理异步操作的副作用
+- **Asynchronous State Handling**
+  - Handle asynchronous operations using Redux Toolkit's `createAsyncThunk`
+  - Implement standard loading, success, and failure state management
+  - Process side effects of asynchronous operations through middleware
 
-#### 2. 服务端状态管理
-- **数据获取策略**
-  - 使用 Next.js 的 Server Components 获取初始数据
-  - 通过 API 路由处理服务端数据请求
+#### 2. Server-Side State Management
+- **Data Fetching Strategy**
+  - Use Next.js Server Components to fetch initial data
+  - Handle server-side data requests through API routes
 
-- **缓存策略**
-  - 实现服务端数据缓存，减少重复请求
-  - 使用适当的缓存过期策略，确保数据新鲜度
-  - 支持按需刷新缓存数据
+- **Caching Strategy**
+  - Implement server-side data caching to reduce duplicate requests
+  - Use appropriate cache expiration strategies to ensure data freshness
+  - Support on-demand cache data refresh
 
-#### 3. 状态同步机制
-- **前后端状态同步**
-  - 服务端组件通过 Server Components 获取初始数据，直接注入到页面
-  - 使用 Redux Toolkit 的 `createAsyncThunk` 处理客户端数据更新请求
-  - 通过 Next.js API 路由处理服务端数据更新，确保数据一致性
+#### 3. State Synchronization Mechanism
+- **Frontend-Backend State Synchronization**
+  - Server components fetch initial data through Server Components and inject directly into pages
+  - Handle client-side data update requests using Redux Toolkit's `createAsyncThunk`
+  - Process server-side data updates through Next.js API routes to ensure data consistency
 
-### 性能考虑
+### Performance Considerations
 
-#### 1. 组件渲染策略
-- **服务端渲染（SSR）**
-  - 首屏关键数据（如公司风险概览、ESG 分类）采用服务端渲染
-  - 使用 Server Components 获取初始数据，减少客户端数据请求
-  - 通过 `layout.tsx` 实现服务端布局，优化首屏加载性能
+#### 1. Component Rendering Strategy
+- **Server-Side Rendering (SSR)**
+  - Use SSR for critical first-screen data (e.g., company risk overview, ESG categories)
+  - Reduce client-side data requests using Server Components for initial data
+  - Optimize first-screen loading performance through `layout.tsx` server-side layout
 
-- **客户端渲染（CSR）**
-  - 交互密集型组件（如图表、计数器）采用客户端渲染
+- **Client-Side Rendering (CSR)**
+  - Use CSR for interaction-intensive components (e.g., charts, counters)
 
-- **混合渲染**
-  - 静态内容使用服务端渲染，动态内容使用客户端渲染
+- **Hybrid Rendering**
+  - Use SSR for static content and CSR for dynamic content
 
-#### 2. 数据管理优化
-- **服务端数据缓存**
-  - 实现服务端数据缓存，减少数据库查询
+#### 2. Data Management Optimization
+- **Server-Side Data Caching**
+  - Implement server-side data caching to reduce database queries
 
-- **客户端状态管理**
-  - 使用 Redux Toolkit 管理全局状态，减少重复请求
+- **Client-Side State Management**
+  - Use Redux Toolkit for global state management to reduce duplicate requests
 
-### 数据处理方法
+### Data Processing Methods
 
-#### 1. 数据流架构
+#### 1. Data Flow Architecture
 ```
-[数据源] → [服务端] → [客户端] → [视图层]
-   │          │          │          │
-   │          │          │          │
-   ▼          ▼          ▼          ▼
-[外部API] → [Server Components] → [Redux Store] → [React Components]
-   │          │          │          │
-   │          │          │          │
-   ▼          ▼          ▼          ▼
-[数据库] → [API Routes] → [Client Components] → [UI渲染]
-```
-
-#### 2. 服务端数据处理
-- **数据获取层**
-  - 使用 Server Components 直接获取初始数据
-  - 通过 API Routes 处理数据查询和更新请求
-  - 实现数据验证和转换逻辑
-
-- **数据缓存层**
-  - 使用内存缓存存储频繁访问的数据
-
-#### 3. 客户端数据处理
-- **状态管理层**
-  - 使用 Redux Toolkit 管理全局状态
-  - 实现状态切片（Slices）组织不同类型数据
-  - 通过中间件处理异步数据操作
-
-- **数据流转层**
-  - 服务端数据注入到 Redux Store
-  - 客户端组件通过 Selectors 订阅数据
-  - 实现数据更新和同步机制
-
-- **数据展示层**
-  - 组件级别的数据转换和格式化
-  - 实现数据过滤和排序功能
-  - 图表数据的处理和可视化
-
-#### 4. 数据流示例
-```
-1. 初始加载
-[外部API] → [Server Component] → [Redux Store] → [页面渲染]
-   │            │                  │
-   │            │                  │
-   ▼            ▼                  ▼
-[获取数据] → [数据处理] → [状态更新] → [UI更新]
-
-2. 数据更新
-[用户交互] → [Client Component] → [Redux Action] → [API Route] → [外部API]
-   │              │                  │              │
-   │              │                  │              │
-   ▼              ▼                  ▼              ▼
-[触发更新] → [准备数据] → [发送请求] → [处理请求] → [更新数据]
-
+[Data Source] → [Server] → [Client] → [View Layer]
+   │            │          │          │
+   │            │          │          │
+   ▼            ▼          ▼          ▼
+[External API] → [Server Components] → [Redux Store] → [React Components]
+   │            │          │          │
+   │            │          │          │
+   ▼            ▼          ▼          ▼
+[Database] → [API Routes] → [Client Components] → [UI Rendering]
 ```
 
-## 开发指南
+#### 2. Server-Side Data Processing
+- **Data Fetching Layer**
+  - Use Server Components to directly fetch initial data
+  - Handle data query and update requests through API Routes
+  - Implement data validation and transformation logic
 
-### 可用脚本
+- **Data Caching Layer**
+  - Use in-memory caching for frequently accessed data
 
-- `npm run dev` - 使用 Turbopack 启动开发服务器
-- `npm run build` - 构建生产环境应用
-- `npm run start` - 启动生产环境服务器
-- `npm run lint` - 运行 ESLint 代码检查
+#### 3. Client-Side Data Processing
+- **State Management Layer**
+  - Use Redux Toolkit for global state management
+  - Implement state slices to organize different types of data
+  - Handle asynchronous data operations through middleware
 
-### 代码规范
+- **Data Flow Layer**
+  - Inject server data into Redux Store
+  - Subscribe to data through Selectors in client components
+  - Implement data update and synchronization mechanisms
 
-本项目使用 ESLint 进行代码检查，遵循 Next.js 推荐的配置规范。运行 `npm run lint` 检查代码规范问题。
+- **Data Presentation Layer**
+  - Component-level data transformation and formatting
+  - Implement data filtering and sorting functionality
+  - Process and visualize chart data
 
-## 贡献指南
+#### 4. Data Flow Examples
+```
+1. Initial Loading
+[External API] → [Server Component] → [Redux Store] → [Page Rendering]
+   │              │                  │
+   │              │                  │
+   ▼              ▼                  ▼
+[Fetch Data] → [Process Data] → [Update State] → [Update UI]
 
-1. Fork 本仓库
-2. 创建您的特性分支 (`git checkout -b feature/amazing-feature`)
-3. 提交您的更改 (`git commit -m '添加新特性'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 提交 Pull Request
+2. Data Update
+[User Interaction] → [Client Component] → [Redux Action] → [API Route] → [External API]
+   │                  │                  │              │
+   │                  │                  │              │
+   ▼                  ▼                  ▼              ▼
+[Trigger Update] → [Prepare Data] → [Send Request] → [Process Request] → [Update Data]
+```
 
-## 开源协议
+## Development Guide
 
-本项目采用 MIT 协议 - 详见 LICENSE 文件。
+### Available Scripts
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build production application
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint code check
+
+### Code Standards
+
+This project uses ESLint for code checking, following Next.js recommended configuration. Run `npm run lint` to check code standards.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
