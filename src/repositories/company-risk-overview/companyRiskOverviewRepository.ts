@@ -1,4 +1,4 @@
-import { CompanyRiskOverview } from '@/types/company-risk-overview'
+import { CompanyRiskOverview } from '@/types/company-risk-overview-type'
 
 export class CompanyRiskOverviewRepository {
   async findById(companyId: string): Promise<CompanyRiskOverview | null> {
