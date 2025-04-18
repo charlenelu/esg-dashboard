@@ -1,6 +1,6 @@
 import { Box, Container, Grid, GridItem, VStack, Heading } from '@chakra-ui/react'
 import CompanyRiskOverview from '@/components/company-risk-overview/CompanyRiskOverview'
-import RiskScoreHistory from '@/components/risk-score-history/RiskScoreHistory'
+import RiskScoreHistoryServer from '@/components/risk-score-history/RiskScoreHistoryServer'
 import Incidents from '@/components/incidents/Incidents'
 import CriticalIncidents from '@/components/critical-incidents/CriticalIncidents'
 import ESGCategories from '@/components/esg-categories/ESGCategories'
@@ -12,16 +12,19 @@ export default function DashboardPage() {
       <VStack spacing={8} align="stretch">
         <Heading size="xl" mb={6}>ESG Dashboard</Heading>
         
-        <Grid templateColumns="repeat(12, 1fr)" gap={6}>
+        <Grid 
+          templateColumns={{ base: "1fr", md: "repeat(12, 1fr)" }} 
+          gap={6}
+        >
           {/* 左侧主要区域 */}
-          <GridItem colSpan={8}>
+          <GridItem colSpan={{ base: 12, md: 8 }}>
             <VStack spacing={6} align="stretch">
               <Box bg="white" borderRadius="xl" p={6} boxShadow="sm">
                 <CompanyRiskOverview />
               </Box>
               
               <Box bg="white" borderRadius="xl" p={6} boxShadow="sm">
-                <RiskScoreHistory />
+                <RiskScoreHistoryServer />
               </Box>
               
               <Box bg="white" borderRadius="xl" p={6} boxShadow="sm">
@@ -35,7 +38,7 @@ export default function DashboardPage() {
           </GridItem>
           
           {/* 右侧边栏 */}
-          <GridItem colSpan={4}>
+          <GridItem colSpan={{ base: 12, md: 4 }}>
             <VStack spacing={6} align="stretch">
               <Box bg="white" borderRadius="xl" p={6} boxShadow="sm">
                 <ESGCategories />
