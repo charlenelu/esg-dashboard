@@ -1,64 +1,39 @@
-'use client'
+import { Box, VStack, Text, HStack, Badge } from '@chakra-ui/react'
+import { esgCategoriesService } from '@/services/esgCategoriesService'
 
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, VStack, Text, HStack, Spinner, Alert, AlertIcon, Badge } from '@chakra-ui/react'
-import { fetchESGCategories, selectESGCategories } from './esgCategoriesSlice'
-import { AppDispatch } from '../../store'
+import ESGCategoriesDataReceiver from './ESGCategoriesDataReceiver'
+export default async function ESGCategories() {
+  const { categories } = await esgCategoriesService.getCategories()
 
-const ESGCategories = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const { data, loading, error } = useSelector(selectESGCategories)
-
-  useEffect(() => {
-    dispatch(fetchESGCategories())
-  }, [dispatch])
-
-  if (loading) {
-    return (
-      <Box p={4} textAlign="center">
-        <Spinner />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        {error}
-      </Alert>
-    )
-  }
-
-  if (!data?.categories || data.categories.length === 0) {
+  if (!categories?.length) {
     return (
       <Box p={4}>
+        <ESGCategoriesDataReceiver data={categories} />
         <Text>No ESG categories found</Text>
       </Box>
     )
   }
 
   return (
-    <Box p={4}>
+    
+    <Box p={4} suppressHydrationWarning>
+      <ESGCategoriesDataReceiver data={categories} />
       <VStack spacing={4} align="stretch">
         <Text fontSize="lg" fontWeight="bold">
           ESG Categories
         </Text>
-        {data.categories.map((category) => (
+        {categories.map((category) => (
           <Box
             key={category.id}
             p={4}
             borderWidth="1px"
             borderRadius="lg"
             borderColor="gray.200"
+            suppressHydrationWarning
           >
             <VStack align="stretch" spacing={2}>
               <HStack>
                 <Text fontWeight="bold">{category.name}</Text>
-                <Badge colorScheme={category.color}>
-                  {category.id}
-                </Badge>
               </HStack>
               <Text fontSize="sm" color="gray.600">
                 {category.description}
@@ -67,7 +42,11 @@ const ESGCategories = () => {
                 <Text fontSize="sm" fontWeight="bold">Subcategories:</Text>
                 <HStack spacing={2} wrap="wrap">
                   {category.subcategories.map((subcategory) => (
-                    <Badge key={subcategory.id} colorScheme="gray">
+                    <Badge 
+                      key={subcategory.id} 
+                      colorScheme="gray"
+                      suppressHydrationWarning
+                    >
                       {subcategory.name}
                     </Badge>
                   ))}
@@ -79,6 +58,4 @@ const ESGCategories = () => {
       </VStack>
     </Box>
   )
-}
-
-export default ESGCategories 
+} 
