@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
-import { getESGCategories } from '../../services/service'
+// import { getESGCategories } from '../../services/service'
 
 interface Subcategory {
   id: string
@@ -33,10 +33,11 @@ const initialState: ESGCategoriesState = {
 
 export const fetchESGCategories = createAsyncThunk(
   'esgCategories/fetchESGCategories',
-  async () => {
+  async (data: ESGCategory[]) => {
     try {
-      const response = await getESGCategories()
-      return response.default
+        return {
+            categories: data
+        }
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Failed to fetch ESG categories data')
     }
