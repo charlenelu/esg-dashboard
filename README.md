@@ -81,7 +81,50 @@ yarn dev
 - **Styling Solution**: Tailwind CSS
 - **Type System**: TypeScript
 
-### Key Design Decisions
+### Design Summary
+
+#### Architectural design:
+
+- The project uses the Next.js App Router architecture, making full use of its file-system routing features.
+- Route Groups are used to organize related pages, such as the (dashboard) route group.
+- It uses a modular development approach, organizing code by functional modules. Each module is independently organized (such as esg-categories, risk-score-history).
+- The project's directory is clearly layered, 
+  - including the page route layer, 
+  - api route layer, 
+  - business layer (services), 
+  - data layer (repositories), 
+  - business components (components), 
+  - unified type definitions(placed in the types directory),
+  - and common utility functions placed in the lib directory, etc., 
+  - This design improved code reusability and scalability.
+- On the front-end, Redux Toolkit is used to manage the global state, achieve data sharing between components, reduce duplicate requests, implement server-side data caching, and reduce data queries.
+
+#### Key design decisions:
+- Decisions on performance and experience, for example:
+  - Key components on the first screen (such as the company risk overview, Historical trend chart) are set as server-side components and rendered by SSR to improve loading performance.
+  - Use hybrid component rendering to pass data between the server-side to the client-side. 
+    - For example, the esg-categories is designed as a server-side component, but the data is also needed on the client-side. Through hybrid rendering , the data obtained from the server-side can be directly passed to the client-side and stored in the Redux store to achieve data sharing.
+  - Use data caching to reduce duplicate requests.
+  - About Server side performance considerition
+    - If the page has a large number of visits or the backend resources are limited, generating static pages according to the reporting cycle (Static Site Generation (SSG)) can be considered. 
+    - However, this will increase the complexity of the engineering construction and deployment process, and a trade-off is needed. If the traffic is not so large and the backend resources are sufficient, SSR is acceptable.
+    - Server side data cache (like redis and so on) can be considered.
+-  Components design principles and rendering Strategy
+  - the component type (server-side/client-side) is determined based on functional and performance requirements.
+  - Static content prefers to use server-side components. Interaction-intensive components (such as chart components) use client-side components.
+  - A hybrid rendering mode can be used to pass server-side data to the client-side, speed up the client-side rendering.
+- Appropriate fault-tolerance processing on both the front-end and the back-end is added to reduce the interference of errors on users.
+
+#### Data processing methods:
+- Server-side data processing，has two ways
+  - One, Use Server Components to directly obtain initial data.
+  - The other one, Provide API interfaces through API Routes to handle data query requests.
+- Client-side data processing, also has  two ways :
+  - Obtain data through API requests.
+  - Pass server-side data to client-side components through hybrid rendering.
+- On the front-end, Redux Toolkit is used to manage the global state, implement state slices to organize different types of data, and achieve data sharing and reuse between components through Selectors.
+
+### Detailed Design Decisions
 
 #### 1. Modern Routing Architecture
 - Adopt Next.js App Router architecture, leveraging its file system routing features
